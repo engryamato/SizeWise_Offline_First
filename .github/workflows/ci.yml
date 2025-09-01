@@ -1,0 +1,22 @@
+name: CI
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+jobs:
+  lint_unit_integration:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder steps
+        run: echo "CI placeholder — install and tests will be added in M0"
+  e2e_electron:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "E2E placeholder"
+

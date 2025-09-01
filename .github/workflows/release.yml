@@ -1,0 +1,16 @@
+name: Release
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build_sign_publish:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder release
+        run: echo "Release placeholder — electron-builder config to be wired in M0"
+

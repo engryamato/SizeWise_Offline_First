@@ -1,0 +1,11 @@
+{
+  "appId": "com.sizewise.app",
+  "productName": "SizeWise",
+  "directories": { "output": "dist" },
+  "files": ["dist/**/*", "package.json"],
+  "publish": [{ "provider": "github", "owner": "engryamato", "repo": "SizeWise_Offline_First" }],
+  "mac": { "category": "public.app-category.developer-tools", "hardenedRuntime": true },
+  "win": { "target": "nsis" },
+  "linux": { "target": ["AppImage"] }
+}
+

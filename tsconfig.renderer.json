@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist/renderer",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "types": ["dom"],
+    "isolatedModules": true
+  },
+  "include": ["src/renderer/**/*"]
+}
+

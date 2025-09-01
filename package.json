@@ -1,0 +1,17 @@
+{
+  "name": "sizewise-offline-first",
+  "version": "0.0.0",
+  "private": true,
+  "description": "SizeWise Offline-First Desktop App",
+  "main": "dist/main/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Dev script placeholder. Install deps before running.'",
+    "build": "echo 'Build script placeholder. Install deps before running.'",
+    "lint": "echo 'Lint placeholder'",
+    "test": "echo 'Test placeholder'"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
+
