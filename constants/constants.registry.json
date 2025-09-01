@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "reviewed_on": "2025-09-01",
+    "default_ruleset_version": "1.0.0",
+    "compatibility": [
+      { "app": ">=1.0 <2.0", "ruleset": "^1" }
+    ]
+  },
+  "air": {
+    "rho_lbft3_70F_sea_level": { "val": 0.075, "src": "ASHRAE HOF", "status": "verified" },
+    "rho_altitude_fn": { "val": "formula", "src": "ASHRAE HOF", "status": "verified" }
+  },
+  "materials": {
+    "galv_roughness_in": { "val": 0.0003, "src": "SMACNA", "status": "verify" }
+  },
+  "fittings": {
+    "k_elbow_long_radius": { "val": 0.23, "src": "ASHRAE Duct Fittings DB", "status": "verify" }
+  }
+}
+

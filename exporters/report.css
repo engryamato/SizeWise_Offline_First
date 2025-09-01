@@ -1,0 +1,14 @@
+@page { size: A4; margin: 16mm; }
+body { font-family: Arial, sans-serif; font-size: 11pt; color: #111; }
+header { border-bottom: 1px solid #ccc; margin-bottom: 12px; }
+header h1 { margin: 0; font-size: 18pt; }
+.provenance { font-size: 9pt; color: #555; }
+section { margin: 12px 0; }
+footer { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; font-size: 9pt; color: #666; }
+
+/* Grace Mode watermark hook */
+#watermark.grace { color: #b00; font-weight: bold; }
+
+/* Print determinism */
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
