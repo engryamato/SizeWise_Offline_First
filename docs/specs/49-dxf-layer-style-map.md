@@ -19,6 +19,7 @@
 - Font: Arial (fallback SHX if unavailable)
 - Height: 0.125 in (change via config if needed)
 - Color: layer color
+- Encoding: ensure ASCII subset for SHX fallback; avoid glyphs not supported by target CAD
 
 ## Blocks (Fittings)
 - Names: ELBOW_90_LR, ELBOW_45, TEE, TRANSITION

@@ -1,11 +1,10 @@
-# .sizewise File Format (Draft v0.2)
+# .sizewise File Format (Draft v0.1)
 
 Goals: deterministic round-trip, versioned, integrity-protected, optionally encrypted.
 
 ## Container
-
-- Format: JSON document (UTF-8) or ZIP container when embedding assets
-- MIME type: application/vnd.sizewise+json (JSON) or application/vnd.sizewise+zip (ZIP)
+- Default packaging: JSON document (UTF-8); ZIP container only when embedding assets
+- MIME type: application/vnd.sizewise+json (JSON default) or application/vnd.sizewise+zip (ZIP)
 - Top-level fields (JSON profile):
 ```json
 {
@@ -15,7 +14,7 @@ Goals: deterministic round-trip, versioned, integrity-protected, optionally encr
   "appVersion": "1.0.0",
   "project": { /* see schema */ },
   "entities": { /* jobs, segments, endpoints, locations, results */ },
-  "meta": { "units": "imperial|metric", "publicKeyHint": "optional" },
+  "meta": { "units": "imperial|metric" },
   "integrity": {
     "algo": "SHA-256",
     "hash": "<hex>",
@@ -30,8 +29,6 @@ Goals: deterministic round-trip, versioned, integrity-protected, optionally encr
 }
 ```
 
-- ZIP profile: place the above JSON at /manifest.json; include assets under /assets/**; integrity & signing apply to canonicalized manifest bytes.
-
 ## Entities (normalized)
 - project: { id, name, unitSystem, createdAt, updatedAt, notes }
 - jobs: [ { id, projectId, title, altitudeFt, preferredVelocityFpm, roomType, defaultLocationId } ]
@@ -41,16 +38,14 @@ Goals: deterministic round-trip, versioned, integrity-protected, optionally encr
 - results: [ { id, segmentId, velocityFpm, reynolds, frictionPer100ft, fittingsLoss, totalLoss, warnings, computedAt } ]
 
 ## Integrity & Signing
-
-- Compute SHA-256 over the canonical JSON excluding `integrity` and `encryption` objects.
-- Optional detached signature (ed25519 or RSA) over the same bytes; include a public key hint in meta when signed.
-- Strict mode: refuse unsigned imports; Standard mode: allow unsigned with warning; Labs mode: allow bypass for testing only.
+- Compute SHA-256 over the JSON canonical form excluding `integrity` and `encryption` objects.
+- Optional signing: detached signature (ed25519 or RSA) over the same bytes; include public key hint in meta when signed.
+- Import policy modes: Strict (signed only), Standard (unsigned allowed with warning), Labs (testing only).
 
 ## Encryption (optional)
-
 - AES-256-GCM with per-export random IV.
 - Key derived from user passphrase via Argon2id; store salt and parameters in `encryption.kdf`.
-- Password policy: min length 12, rate-limit decrypt attempts (e.g., 5 tries then exponential backoff)
+- Password policy: min length 12; decrypt rate limiting (5 tries then exponential backoff)
 - When encrypted, JSON payload becomes a compact binary blob encoded in base64 under `payload`, and most top-level fields move into an unencrypted header: { format, version, createdAt, appVersion, meta, encryption, integrity }.
 
 ## Versioning & Migration
