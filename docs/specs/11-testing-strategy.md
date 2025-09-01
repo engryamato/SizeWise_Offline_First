@@ -1,4 +1,4 @@
-# Testing Strategy (Draft v0.2)
+# Testing Strategy (Draft v0.1)
 
 ## Scope
 - Unit: calc engine (goldens + property-based), validators, licensing, helpers
@@ -15,6 +15,11 @@
 - 10+ canonical segments/jobs with expected numeric outputs and warnings
 - Lock rounding order and constants; fail fast on drift
 
+## Fuzz & Invariants
+- Fuzz import manifests with random omissions/extra keys → assert graceful failures (no crashes)
+- Invariants: pressure loss ≥ 0; Reynolds ≥ 0; Q ≈ V·A within tolerance; unit conversions roundtrip within tolerance
+- Cross-platform: file paths/line endings/locale differences don’t affect results
+
 ## Offline/Online Scenarios
 - Simulate network loss; ensure queue persists; verify UI badges and retries (if sync)
 
@@ -26,19 +31,4 @@
 - Calc recompute for segment < 200ms typical
 - Canvas panning ~60 FPS on mid-tier hardware
 - Cold start < 2s; steady-state memory < 1.5 GB on large projects
-
-## Performance Measurement Protocol
-- Baseline hardware: one of
-  - Intel i5-11400 (6C/12T), 16 GB RAM, NVMe SSD; Windows 11
-  - Apple M1 (8C), 16 GB RAM; macOS 13+
-- Method:
-  - Warm-up: run each scenario 3 times; measure next 10; report P95
-  - Disable background sync/updates; ensure consistent Node/Electron versions
-  - Record environment in output (OS, CPU, RAM, Electron/Node versions)
-- Datasets:
-  - Small (≤300 segments), Medium (≤2,000), Large (≤10,000)
-- Targets:
-  - Bulk recompute: ≤2.5s (Medium, P95), ≤12s (Large, P95)
-  - Canvas panning: ≥55 FPS steady on Large
-  - Memory caps: ≤300MB (Small), ≤900MB (Medium), ≤1.5GB (Large)
 

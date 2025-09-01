@@ -2,6 +2,13 @@
 
 Document key decisions and their rationale. Create one ADR per decision.
 
+## Accepted ADRs
+- ADR-0005 SizeWise Packaging (.sizewise JSON/ZIP)
+- ADR-0006 DXF Profile & Fonts (R2018, inches, Arial with SHX fallback)
+- ADR-0007 Update Provider (GitHub Releases)
+- ADR-0008 Grace Mode Policy (7 days, watermark, sync/batch restrictions)
+- ADR-0009 Labor Cost Enablement (post-MVP, placeholder)
+
 ## Proposed ADRs
 - ADR-001 Desktop-only scope; no smartphones; Electron primary
 - ADR-002 Database engine: SQLite via better-sqlite3; WAL; migrations strategy
