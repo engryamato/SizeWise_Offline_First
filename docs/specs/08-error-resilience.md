@@ -16,9 +16,15 @@
 - Dead-letter: after max retries, move mutation or task to DLQ with actionable message; surface in UI
 
 ## Database Resilience
-- PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON
-- Periodic lightweight backup (e.g., daily) to appData/backups with rotation (keep last 7)
-- On corruption detection: take a snapshot; attempt .recover; if fail, restore latest backup; never overwrite without copy
+- PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON; PRAGMA synchronous = NORMAL
+- Backups: daily lightweight backup to appData/backups with rotation (keep last 7)
+- Preflight: on boot, create a read-only snapshot copy before any repair attempts
+- Corruption flow (in order):
+  1) Safe snapshot → export .sizewise.recovery (best effort)
+  2) Auto-backup restore → load last good WAL snapshot (/backups/auto/<ts>.db)
+  3) Rebuild → VACUUM INTO new file, re-apply migrations, re-hydrate indices
+  4) User prompt → if still failing, offer “Restore snapshot…”, “Open recovery”, “Contact support”
+- Give-up threshold: after 3 failed repairs within 10 minutes, stop auto-retries and block with guidance
 
 ## Crash-safe Writes
 - Use transactions for multi-entity writes; ensure fsync via SQLite defaults; avoid long transactions in UI paths

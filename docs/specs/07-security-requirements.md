@@ -12,15 +12,16 @@ Scope: Desktop-only (Electron). No smartphones. Tablets only if running desktop 
 - At-rest protection
   - Encrypt sensitive data (either full DB or selected tables/fields)
   - Keys stored via OS keystores: Keychain (macOS), DPAPI (Windows), libsecret (Linux) using keytar
-  - Lockdown export encryption (AES‑256‑GCM) with Argon2id KDF when user sets a passphrase
+  - Lockdown export encryption (AES‑256‑GCM) with Argon2id KDF when user sets a passphrase (min length 12; rate-limit decrypt attempts)
 - Update integrity
   - Use signed installers and signed auto-updates (electron-updater); reject unsigned artifacts
   - HTTPS/TLS 1.2+ to update provider; optional certificate pinning
 - Integrity & signing for .sizewise
   - SHA‑256 over canonical JSON; optional detached signature (public key hint in meta)
+  - Import policy modes: Strict (signed only), Standard (unsigned allowed with warning), Labs (testing only)
 - Logs & telemetry
   - Sanitize logs; never serialize full project payloads in error logs
-  - Telemetry/crash reporting is opt-in; no PII; redact IDs when possible
+  - Telemetry/crash reporting is opt-in (default off); no PII; redact IDs; rotate telemetry keys
 - IPC hardening
   - contextIsolation: true; nodeIntegration: false; preload exposes minimal, typed APIs
   - Validate all inputs server-side (Main) before DB writes

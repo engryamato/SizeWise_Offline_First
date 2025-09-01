@@ -38,7 +38,7 @@ flowchart LR
     M2[Sync Agent]
     M3[Licensing Service]
     M4[Update Service (electron-updater)]
-    M5[Export/Import Service]
+    M5[Export/Import Service (printToPDF, CSV, DXF adapter)]
     M6[Telemetry Broker]
   end
 
@@ -99,7 +99,7 @@ Licensing (Main)
 
 Update Service (Main)
 
-- Responsibilities: channels, download/apply, signature verification, rollback strategy
+- Responsibilities: channels, download/apply, signature verification, rollback strategy (allowDowngrade)
 - Interfaces: UpdateService
 
 Telemetry Broker (Main)

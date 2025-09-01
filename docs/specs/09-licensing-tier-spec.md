@@ -15,6 +15,10 @@
 ## Enforcement Points
 - At UI action dispatch; at DataService level as last resort
 - Hard blocks for over-limit creates; soft warnings near thresholds
+- Grace Mode (default 7 days):
+  - Editing allowed; exports allowed but watermarked (PDF/DXF/CSV)
+  - Cloud sync (if present) disabled; batch exports disabled
+  - Audit event recorded (lic_grace_entered) with anonymized fingerprint
 
 ## Storage & Security
 - Store license blob and verification status; cache in DB; keep original file
