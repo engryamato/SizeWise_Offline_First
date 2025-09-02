@@ -1,0 +1,22 @@
+{
+  "name": "sizewise-offline-first",
+  "private": true,
+  "version": "0.0.0",
+  "description": "SizeWise Offline-First desktop app skeleton",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm exec tsx scripts/electron-dev.ts",
+    "build:renderer": "vite build",
+    "build": "pnpm run build:renderer",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "pixi.js": "^8.12.0"
+  }
+}
