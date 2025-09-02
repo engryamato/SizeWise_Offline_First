@@ -26,19 +26,19 @@ Target: Electron (desktop). Channels: stable, beta. Provider: GitHub Releases or
 - Use electron-updater in Main: check on start (deferred), allow manual check; download in background; prompt before apply.
 
 ## Signing & Notarization
-- Store cert refs in CI secrets; never commit private keys.
-- macOS: sign with Developer ID, upload for notarization, staple ticket.
-- Windows: sign with EV cert; timestamping server.
+- Store cert refs in CI secrets; never commit private keys. Prefer OIDC and keychain on self-hosted runners where possible.
+- macOS: sign with Developer ID; notarize with notarytool; staple ticket; document Gatekeeper/App Translocation behavior.
+- Windows: RFC3161 timestamping (e.g., http://timestamp.digicert.com); EV cert optional but recommended to build SmartScreen reputation.
 
 ## CI/CD (GitHub Actions sketch)
 - Jobs: lint/test → build per OS → sign/notarize → publish release → upload artifacts → create release notes
 - Use matrix builds; protect main; require passing checks
 
 ## Channels & Versioning
-- Semantic versioning. Beta channel for pre-release tags. AutoUpdater feeds by channel.
+- Semantic versioning (Conventional Commits drive release notes). Beta channel for pre-release tags. AutoUpdater feeds by channel.
 
 ## Rollback Strategy
-- Keep last 2 versions cached; allow user-triggered rollback.
+- Keep last 2 versions cached; allow user-triggered rollback. Updater allowDowngrade: true; flip channel pointer to prior stable tag for mass rollback.
 
 ## Release Notes
 - Generated from conventional commits; include breaking changes section.

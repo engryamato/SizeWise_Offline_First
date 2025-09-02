@@ -3,8 +3,9 @@
 Goals: deterministic round-trip, versioned, integrity-protected, optionally encrypted.
 
 ## Container
-- Format: JSON document (UTF-8)
-- Top-level fields:
+- Default packaging: JSON document (UTF-8); ZIP container only when embedding assets
+- MIME type: application/vnd.sizewise+json (JSON default) or application/vnd.sizewise+zip (ZIP)
+- Top-level fields (JSON profile):
 ```json
 {
   "format": "sizewise",
@@ -36,13 +37,15 @@ Goals: deterministic round-trip, versioned, integrity-protected, optionally encr
 - locations: [ { id, projectId, building, level, roomCode, roomName, locationType, tags } ]
 - results: [ { id, segmentId, velocityFpm, reynolds, frictionPer100ft, fittingsLoss, totalLoss, warnings, computedAt } ]
 
-## Integrity
+## Integrity & Signing
 - Compute SHA-256 over the JSON canonical form excluding `integrity` and `encryption` objects.
-- Optional signing: detached signature over the same bytes; include public key hint in meta when signed.
+- Optional signing: detached signature (ed25519 or RSA) over the same bytes; include public key hint in meta when signed.
+- Import policy modes: Strict (signed only), Standard (unsigned allowed with warning), Labs (testing only).
 
 ## Encryption (optional)
 - AES-256-GCM with per-export random IV.
 - Key derived from user passphrase via Argon2id; store salt and parameters in `encryption.kdf`.
+- Password policy: min length 12; decrypt rate limiting (5 tries then exponential backoff)
 - When encrypted, JSON payload becomes a compact binary blob encoded in base64 under `payload`, and most top-level fields move into an unencrypted header: { format, version, createdAt, appVersion, meta, encryption, integrity }.
 
 ## Versioning & Migration

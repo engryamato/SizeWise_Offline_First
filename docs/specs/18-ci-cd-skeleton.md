@@ -14,11 +14,15 @@
   - on: tag push (vX.Y.Z or vX.Y.Z-beta.N)
   - jobs: build-sign-notarize → publish (GitHub Releases) → create release notes
 
+## Provider (Updates)
+- GitHub Releases (default provider for electron-updater)
+
 ## Secrets Required
 - WIN_CSC_LINK / WIN_CSC_KEY_PASSWORD (Windows signing)
 - CSC_LINK / CSC_KEY_PASSWORD (macOS Developer ID)
-- GH_TOKEN for GitHub Releases
+- GH_TOKEN for GitHub Releases (no echo)
 
-## Provenance
+## Security & Provenance
+- Prefer OIDC and short-lived tokens; avoid storing certs in plaintext in CI
 - Consider SLSA/GitHub OIDC attestation for build provenance
 

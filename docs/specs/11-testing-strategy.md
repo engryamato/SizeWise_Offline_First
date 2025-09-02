@@ -15,6 +15,11 @@
 - 10+ canonical segments/jobs with expected numeric outputs and warnings
 - Lock rounding order and constants; fail fast on drift
 
+## Fuzz & Invariants
+- Fuzz import manifests with random omissions/extra keys → assert graceful failures (no crashes)
+- Invariants: pressure loss ≥ 0; Reynolds ≥ 0; Q ≈ V·A within tolerance; unit conversions roundtrip within tolerance
+- Cross-platform: file paths/line endings/locale differences don’t affect results
+
 ## Offline/Online Scenarios
 - Simulate network loss; ensure queue persists; verify UI badges and retries (if sync)
 
